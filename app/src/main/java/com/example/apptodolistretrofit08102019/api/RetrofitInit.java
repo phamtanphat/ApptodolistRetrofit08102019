@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.Protocol;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInit {
@@ -23,12 +24,11 @@ public class RetrofitInit {
         if (retrofit == null) {
             retrofit = initRetro();
         }
-
+        return retrofit.create(ApiRequest.class);
     }
 
     private static Retrofit initRetro() {
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
@@ -36,10 +36,9 @@ public class RetrofitInit {
                 .retryOnConnectionFailure(true)
                 .protocols(Arrays.asList(Protocol.HTTP_1_1))
                 .build();
-
-
         retrofit = new Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl("http://172.16.1.17:8080/apiSinhvien/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
