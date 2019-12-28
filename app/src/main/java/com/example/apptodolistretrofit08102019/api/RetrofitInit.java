@@ -37,7 +37,7 @@ public class RetrofitInit {
                 .protocols(Arrays.asList(Protocol.HTTP_1_1))
                 .build();
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.16.1.17:8080/apiSinhvien/")
+                .baseUrl("https://phatdroid04092019.000webhostapp.com/apiSinhvien/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
